@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center py-4">
       <Random/>
-    </div>
   </div>
 </template>
 <script setup>
