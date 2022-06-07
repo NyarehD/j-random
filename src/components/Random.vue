@@ -6,7 +6,8 @@
           <span id="inputGroup-sizing-default" class="input-group-text">Number of Words</span>
 
           <input v-model.number="times" aria-label="Text input with checkbox" class="form-control" type="text"
-                 @keypress.enter="randomizer">
+            @keypress.enter="randomizer">
+            <button class="btn btn-primary" @click="randomizer">Generate</button>
         </div>
       </div>
     </div>
@@ -27,8 +28,8 @@
   <div class="row">
     <div class="col-12">
       <div v-if="isInline" class="text-center">
-          <span v-for="(item, i) in currentRandomWords" :key="i" :class="{ 'text-break': isInline }"
-                class="text-big">{{ item }}</span>
+        <span v-for="(item, i) in currentRandomWords" :key="i" :class="{ 'text-break': isInline }"
+          class="text-big">{{ item }}</span>
       </div>
       <div v-else>
         <p v-for="(item, i) in currentRandomWords" :key="i" class="text-center text-big">{{ item }}</p>
@@ -38,7 +39,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import { computed, onMounted, ref } from "vue";
 import hiragana from "../words/hiragana.json";
 import katakana from "../words/katakana.json";
 import WordType from "../components/WordType.vue"
@@ -46,8 +47,11 @@ import WordType from "../components/WordType.vue"
 const currentRandomIndexes = ref([]);
 const isInline = ref(true);
 const times = ref(5);
-const wordType = ref("romaji")
-
+const wordType = ref("romaji");
+const testing = ref("What is this testing?")
+const conpuTesting = computed(() => {
+  return testing;
+})
 function randomizer() {
   currentRandomIndexes.value = [];
   for (let i = 0; i < times.value; i++) {
@@ -64,9 +68,7 @@ onMounted(() => {
 });
 
 const currentRandomWords = computed(() => {
-  return currentRandomIndexes.value.map(item => {
-    return wordType.value === "hiragana" ? hiragana[item].kana : wordType.value === "katakana" ? katakana[item].kana : hiragana[item].romaji
-  })
+  return currentRandomIndexes.value.map(item => wordType.value === "hiragana" ? hiragana[item].kana : wordType.value === "katakana" ? katakana[item].kana : hiragana[item].romaji)
 })
 </script>
 
